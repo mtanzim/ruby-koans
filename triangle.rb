@@ -13,7 +13,20 @@
 # and
 #   about_triangle_project_2.rb
 #
+class TriangleError < StandardError
+end
+
 def triangle(a, b, c)
+  if [a,b,c].any? {|side| side <= 0 }
+    raise TriangleError, "lengths cannot be less than or equal to zero"
+  end
+
+  if (a + b <= c) or (a + c <= b) or (b + c <= a)
+    raise TriangleError, "Property violation: the sum of the length of any two sides of a triangle is greater than the length of the third side."
+  end
+
+
+
   if a==b and b ==c
     return :equilateral
   elsif a != b and a != c and b!= c
