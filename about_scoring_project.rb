@@ -31,6 +31,45 @@ require File.expand_path(File.dirname(__FILE__) + '/neo')
 
 def score(dice)
   # You need to write this method
+  # generate hashmap
+  hm = dice.reduce({}) do |acc, cur|
+    if not acc[cur]
+      acc[cur] = 1
+    else
+      acc[cur] += 1
+    end
+    acc
+  end
+
+  # require 'byebug'
+  # byebug
+
+  # score = 0
+  # TODO: there is probably a cleaner way to do this
+  hm.reduce(0) do |sum, (k,v)|
+    if k == 1
+      if v >= 3
+        ones_left = v - 3
+        sum += 1000
+        sum += ones_left * 100
+      else
+        sum += v * 100
+      end
+    elsif k == 5
+      if v >= 3
+        fives_left = v - 3
+        sum += 100 * k
+        sum += fives_left * 50
+      else
+        sum += 50 * v
+      end
+    else
+      if v >=3
+        sum += 100*k
+      end
+    end
+    sum  
+  end
 end
 
 class AboutScoringProject < Neo::Koan
